@@ -21,7 +21,7 @@ arguments
     StnCode (1,3) char
     SamplingPeriod (1,1) double
     FilePath (1,:) char
-    FileNameFormat (1,:) char = '%3s%04d%02d%02dpsec.sec'
+    FileNameFormat (1,:) char 
     DataFormat (1,:) char = '%4d-%02d-%02d %02d:%02d:%02d.000 %3d %9.2f %9.2f %9.2f %9.2f'
     HeaderLine (1,1) double = 13
 end
