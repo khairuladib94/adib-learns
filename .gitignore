@@ -35,6 +35,6 @@ codegen/
 octave-workspace
 
 # Specific files
-RawData.txt
+*.sec
 
 # End of https://www.toptal.com/developers/gitignore/api/matlab
