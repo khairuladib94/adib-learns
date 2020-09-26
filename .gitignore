@@ -36,5 +36,6 @@ octave-workspace
 
 # Specific files
 *.sec
+*.mat
 
 # End of https://www.toptal.com/developers/gitignore/api/matlab
