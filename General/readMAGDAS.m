@@ -1,4 +1,4 @@
-function GM = readMAGDAS(StartDate, EndDate, StnCode, SamplingPeriod, FilePath, FileNameFormat, DataFormat, HeaderLine)
+function GM = readMAGDAS(StartDate, EndDate, StnCode, SamplingPeriod, FileNameFormat, FolderPath, DataFormat, HeaderLine)
 
 % This function reads MAGDAS geomagnetic field data
 %
@@ -9,7 +9,7 @@ function GM = readMAGDAS(StartDate, EndDate, StnCode, SamplingPeriod, FilePath, 
 %   StnCode                  = 'CEB'
 %   SamplingPeriod (seconds) = 1
 %   FilePath                 = 'D:\OneDrive\Belajar\Sandboxes\Learning\General\Raw data\'
-%   FileNameFormat           = '%3s%04d%02d%02dpsec.sec'
+%   FileNameFormat           = 'psec.sec'
 %   DataFormat (Optional)    = '%4d-%02d-%02d %02d:%02d:%02d.000 %3d %9.2f %9.2f %9.2f %9.2f'
 %   HeaderLine (Optional)    = 13
 %
@@ -20,8 +20,8 @@ arguments
     EndDate (1,3) double
     StnCode (1,3) char
     SamplingPeriod (1,1) double
-    FilePath (1,:) char
-    FileNameFormat (1,:) char 
+    FileNameFormat (1,:) char
+    FolderPath (1,:) char = [pwd, '\']
     DataFormat (1,:) char = '%4d-%02d-%02d %02d:%02d:%02d.000 %3d %9.2f %9.2f %9.2f %9.2f'
     HeaderLine (1,1) double = 13
 end
@@ -30,13 +30,15 @@ UTC(:, 1) = datetime(StartDate) : seconds(SamplingPeriod) : datetime(EndDate) + 
 [H, D, Z, F] = deal( NaN(numel(UTC), 1) );
 DataIdx = 1;
 IndxIncrement = (86400 / SamplingPeriod) - 1;
+FileNameFormat = ['%3s%04d%02d%02d', FileNameFormat];
 
 for i = datetime(StartDate) : datetime(EndDate)
     DateAsVector = datevec(i);
     FileName = sprintf(FileNameFormat, StnCode, DateAsVector);
-    FullFilePath = [FilePath, FileName];
+    FullFilePath = [FolderPath, FileName];
     FileID = fopen(FullFilePath);
     if FileID < 0
+        disp([FileName, ' not found']);
         continue;
     end
     
