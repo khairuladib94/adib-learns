@@ -10,8 +10,8 @@ function GM = readMAGDAS(StartDate, EndDate, StnCode, SamplingPeriod, FilePath, 
 %   SamplingPeriod (seconds) = 1
 %   FilePath                 = 'D:\OneDrive\Belajar\Sandboxes\Learning\General\Raw data\'
 %   FileNameFormat           = '%3s%04d%02d%02dpsec.sec'
-%   DataFormat               = '%4d-%02d-%02d %02d:%02d:%02d.000 %3d %9.2f %9.2f %9.2f %9.2f'
-%   HeaderLine               = 13
+%   DataFormat (Optional)    = '%4d-%02d-%02d %02d:%02d:%02d.000 %3d %9.2f %9.2f %9.2f %9.2f'
+%   HeaderLine (Optional)    = 13
 %
 % Written by Adib Yusof (2020) | mkhairuladibmyusof@gmail.com
 
