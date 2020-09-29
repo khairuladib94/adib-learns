@@ -3,18 +3,19 @@ function GM = readMAGDAS(StartDate, EndDate, StnCode, SamplingPeriod, FileNameFo
 % This function reads MAGDAS geomagnetic field data
 %
 % Output argument
-%   GM (table)                                  : Extracted geomagnetic field data                              
+%   GM (1x5 table)                              : {Extracted geomagnetic field data}                              
 %
-% Input arguments (with examples)
-%
-%   StartDate (3x1 double)                      : [2012, 01, 20]
-%   EndDate (3x1 double)                        : [2012, 01, 27]
-%   StnCode (3x1 char)                          : 'CEB'
+% Required input arguments (with examples)
+%   StartDate (1x3 double)                      : [2012, 01, 20]
+%   EndDate (1x3 double)                        : [2012, 01, 27]
+%   StnCode (1x3 char)                          : 'CEB'
 %   SamplingPeriod (in seconds | 1x1 double)    : 1
-%   FolderPath (char vector)                    : 'D:\OneDrive\Belajar\Sandboxes\Learning\General\Raw data\'
 %   FileNameFormat (char vector)                : 'psec.sec'
-%   DataFormat (optional | char vector)         : '%4d-%02d-%02d %02d:%02d:%02d.000 %3d %9.2f %9.2f %9.2f %9.2f' (default)
-%   HeaderLine (optional | 1x1 double)          : 13 (default)
+%
+% Optional input arguments (with default values)
+%   FolderPath (1xn char)                       : 'D:\OneDrive\Data' (default: current MATLAB directory) 
+%   DataFormat (1xn char)                       : '%4d-%02d-%02d %02d:%02d:%02d.000 %3d %9.2f %9.2f %9.2f %9.2f' (default)
+%   HeaderLine (1x1 double)                     : 13 (default)
 %
 % Written by Adib Yusof (2020) | mkhairuladibmyusof@gmail.com
 
@@ -36,9 +37,9 @@ UTC(:, 1) = datetime(StartDate) : seconds(SamplingPeriod) : datetime(EndDate) + 
 DataIdx = 1;
 IndxIncrement = (86400 / SamplingPeriod) - 1;
 FileNameFormat = ['%3s%04d%02d%02d', FileNameFormat];
-if FolderPath(end) ~= '\'
-    FolderPath = [FolderPath, '\'];
-end
+if FolderPath(end) ~= '\'     FolderPath = [FolderPath, '\'];     end %#ok<*SEPEX>
+if ~ exist(FolderPath, 'dir')     error('Folder path does not exist.');    end
+warning('off'); addpath(FolderPath); warning('on');
 
 for i = datetime(StartDate) : datetime(EndDate)
     DateAsVector = datevec(i);
